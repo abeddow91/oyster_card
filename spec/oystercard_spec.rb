@@ -14,7 +14,10 @@ describe OysterCard do
   end
 
   it 'deducts value from the balance' do
-    expect(card).to respond_to(:deduct)
     expect {card.deduct(1)}.to raise_error "do not have enough money"
+  end
+
+  it 'returns false for in_journey' do
+  expect(card.in_journey?).to eq false
   end
 end
