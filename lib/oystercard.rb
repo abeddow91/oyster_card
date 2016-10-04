@@ -8,7 +8,6 @@ attr_reader :balance, :max_limit, :entry_station
   def initialize(max_limit = MAX_LIMIT, balance = BALANCE)
     @max_limit = max_limit
     @balance = balance
-    @in_journey = false
   end
 
   def top_up(value)
@@ -17,18 +16,16 @@ attr_reader :balance, :max_limit, :entry_station
   end
 
   def in_journey?
-    @in_journey
+    @entry_station != nil
   end
 
   def touch_in(entry_station)
     raise "insufficient funds to complete journey" if @balance < MINIMUM_FARE
     @entry_station = entry_station
-    @in_journey = true
   end
 
   def touch_out
-    @balance -= MINIMUM_FARE
-    @in_journey = false
+    deduct(MINIMUM_FARE)
     @entry_station = nil
   end
 

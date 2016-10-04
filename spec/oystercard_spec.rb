@@ -25,22 +25,23 @@ describe OysterCard do
   expect(card.in_journey?).to eq false
   end
 
-  xit 'touch_in to change in_journey to true' do
+  it 'touch_in to change in_journey to true' do
     card.top_up(@top_up_value)
-    expect{card.touch_in}.to change{card.in_journey?}.from(false).to(true)
+    expect{card.touch_in(station)}.to change{card.in_journey?}.from(false).to(true)
   end
 
-  xit 'touch_out to change in_journey to false' do
+  it 'touch_out to change in_journey to false' do
     card.top_up(@top_up_value)
-    card.touch_in
+    card.touch_in(station)
     expect{card.touch_out}.to change{card.in_journey?}.from(true).to(false)
   end
 
-  xit 'touch_in rais an error if minimum fare not met' do
-    expect{card.touch_in}.to raise_error "insufficient funds to complete journey"
+  it 'touch_in raises an error if minimum fare not met' do
+    expect{card.touch_in(station)}.to raise_error "insufficient funds to complete journey"
   end
 
   it 'deducts minimum fare from balance' do
+    card.top_up(@top_up_value)
     expect{card.touch_out}.to change{card.balance}.by( 0 - OysterCard::MINIMUM_FARE)
   end
 
@@ -50,7 +51,7 @@ describe OysterCard do
     expect(card.entry_station).to eq station
   end
 
-  it 'sets teh entry station to nil' do
+  it 'sets the entry station to nil' do
     card.top_up(@top_up_value)
     card.touch_in(station)
     expect{card.touch_out}.to change{card.entry_station}.from(station).to(nil)
