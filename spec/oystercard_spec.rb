@@ -21,8 +21,13 @@ describe OysterCard do
   expect(card.in_journey?).to eq false
   end
 
-  it 'touch_in to change in_journey' do
+  it 'touch_in to change in_journey to true' do
     expect{card.touch_in}.to change{card.in_journey?}.from(false).to(true)
+  end
+
+  it 'touch_out to change in_journey to false' do
+    card.touch_in
+    expect{card.touch_out}.to change{card.in_journey?}.from(true).to(false)
   end
 
 end
