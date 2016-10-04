@@ -43,4 +43,8 @@ describe OysterCard do
     expect{card.touch_in}.to raise_error "insufficient funds to complete journey"
   end
 
+  it 'deducts minimum fare from balance' do
+    expect{card.touch_out}.to change{card.balance}.by( 0 - OysterCard::MINIMUM_FARE)
+  end
+
 end

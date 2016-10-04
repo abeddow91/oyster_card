@@ -31,6 +31,7 @@ attr_reader :balance, :max_limit
   end
 
   def touch_out
+    @balance -= MINIMUM_FARE
     @in_journey = false
   end
 
