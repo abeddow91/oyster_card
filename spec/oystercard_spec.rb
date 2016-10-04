@@ -20,10 +20,6 @@ describe OysterCard do
     expect {card.top_up(@top_up_value)}.to raise_error "balance cannot exceed #{OysterCard::MAX_LIMIT} pounds"
   end
 
-  it 'deducts value from the balance' do
-    expect {card.deduct(@deduct_value)}.to raise_error "do not have enough money"
-  end
-
   it 'returns false for in_journey' do
   expect(card.in_journey?).to eq false
   end
