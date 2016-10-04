@@ -20,4 +20,9 @@ describe OysterCard do
   it 'returns false for in_journey' do
   expect(card.in_journey?).to eq false
   end
+
+  it 'touch_in to change in_journey' do
+    expect{card.touch_in}.to change{card.in_journey?}.from(false).to(true)
+  end
+
 end

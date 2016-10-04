@@ -23,4 +23,8 @@ attr_reader :balance, :max_limit
     @in_journey
   end
 
+  def touch_in
+    @in_journey = true
+  end
+
 end
