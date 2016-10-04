@@ -37,5 +37,4 @@ attr_reader :balance, :max_limit, :entry_station
     raise "do not have enough money" if @balance < value
     @balance -= value
   end
-
 end

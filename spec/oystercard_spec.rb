@@ -55,6 +55,4 @@ describe OysterCard do
     card.touch_in(station)
     expect{card.touch_out}.to change{card.entry_station}.from(station).to(nil)
   end
-
-
 end
