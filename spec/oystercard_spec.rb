@@ -33,7 +33,7 @@ describe OysterCard do
   it 'touch_out to change in_journey to false' do
     card.top_up(@top_up_value)
     card.touch_in(station)
-    expect{card.touch_out}.to change{card.in_journey?}.from(true).to(false)
+    expect{card.touch_out(station)}.to change{card.in_journey?}.from(true).to(false)
   end
 
   it 'touch_in raises an error if minimum fare not met' do
@@ -42,7 +42,7 @@ describe OysterCard do
 
   it 'deducts minimum fare from balance' do
     card.top_up(@top_up_value)
-    expect{card.touch_out}.to change{card.balance}.by( 0 - OysterCard::MINIMUM_FARE)
+    expect{card.touch_out(station)}.to change{card.balance}.by( 0 - OysterCard::MINIMUM_FARE)
   end
 
   it "sets the entry station" do
@@ -54,6 +54,34 @@ describe OysterCard do
   it 'sets the entry station to nil' do
     card.top_up(@top_up_value)
     card.touch_in(station)
-    expect{card.touch_out}.to change{card.entry_station}.from(station).to(nil)
+    expect{card.touch_out(station)}.to change{card.entry_station}.from(station).to(nil)
   end
+
+  it 'responds to journey history' do
+    expect(card).to respond_to(:journey_history)
+  end
+
+  it "sets the exit station" do
+    card.top_up(@top_up_value)
+    card.touch_out(station)
+    expect(card.exit_station).to eq station
+  end
+
+  it 'responds to current_journey' do
+  expect(card).to respond_to(:current_journey)
+  end
+
+  it 'changes the hash key to entry station' do
+    card.top_up(@top_up_value)
+    expect{card.touch_in(station)}.to change{card.journey_history}.from({}).to({station => nil})
+  end
+
+  it 'changes the hash value to exit station' do
+    card.top_up(@top_up_value)
+    card.touch_in(station)
+    expect{card.touch_out(station)}.to change{card.journey_history}.from({station => nil}).to({station => station})
+  end
+
+
+
 end
