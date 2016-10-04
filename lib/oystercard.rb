@@ -1,6 +1,8 @@
 class OysterCard
   MAX_LIMIT = 90
   BALANCE = 0
+  MINIMUM_FARE = 1
+
 attr_reader :balance, :max_limit
 
   def initialize(max_limit = MAX_LIMIT, balance = BALANCE)
@@ -10,7 +12,7 @@ attr_reader :balance, :max_limit
   end
 
   def top_up(value)
-    raise "balance cannot exceed #{@max_limit} pounds" if @balance + value > 90
+    raise "balance cannot exceed #{@max_limit} pounds" if @balance + value > MAX_LIMIT
     @balance += value
   end
 
@@ -24,6 +26,7 @@ attr_reader :balance, :max_limit
   end
 
   def touch_in
+    raise "insufficient funds to complete journey" if @balance < MINIMUM_FARE
     @in_journey = true
   end
 
