@@ -19,10 +19,9 @@ describe OysterCard do
     expect{card.touch_in(station)}.to raise_error "insufficient funds to complete journey"
   end
 
-  # it 'changes the hash key to entry station' do
-  #   card.top_up(@top_up_value)
-  #   expect{card.touch_in("banana")}.to change{card.current_journey}.from(nil).to(["banana", nil])
-  # end
+  it 'initialized with an empty history array' do
+    expect(card.journey_history).to eq []
+  end
 
   context 'card is topped up' do
     before do
@@ -50,9 +49,6 @@ describe OysterCard do
       expect(card.exit_station).to eq station
     end
 
-    it 'updates the journey history with entry station' do
-      expect{card.touch_in(station)}.to change{card.current_journey}.from([]).to([station])
-    end
 
     context 'card has been topped up and touched in' do
       before do
@@ -69,15 +65,12 @@ describe OysterCard do
       it 'sets the entry station to nil' do
         expect{card.touch_out(station)}.to change{card.entry_station}.from(station).to(nil)
       end
-
-      it 'updates the journey history with exit station' do
-        expect{card.touch_out(station)}.to change{card.current_journey}.from([station]).to([station, station])
-      end
-
-      it 'updates journey history with entry and exit stations' do
+    
+      it 'updates journey history with an hash of entry and exit stations' do
         card.touch_out(station)
-        expect(card.journey_history).to eq([[station, station]])
+        expect(card.journey_history[0]).to eq({station => station})
       end
+
     end
   end
 
