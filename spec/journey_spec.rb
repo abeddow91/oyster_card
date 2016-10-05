@@ -2,6 +2,7 @@ require 'journey'
 
 describe Journey do
   subject(:journey) {described_class.new}
+  let (:card) {double :card}
 
   it 'instantiates a journey' do
     expect(journey).to eq(journey)
@@ -23,6 +24,10 @@ describe Journey do
   it 'finishes journey and stores exit station' do
     journey.finish_journey('station')
     expect(journey.finish).to eq('station')
+  end
+
+  xit 'touches in and logs the entry station in @start' do
+    expect(journey.start).to eq(station)
   end
 
 

@@ -47,7 +47,12 @@ describe OysterCard do
       expect{card.touch_in(station)}.to change{card.in_journey?}.from(false).to(true)
     end
 
-    it "sets the exit station" do
+    it 'checks that a non-touched in card creates a new journey' do
+      card.touch_out(station)
+      expect(card.journey).not_to eq nil
+    end
+
+    xit "sets the exit station" do
       card.touch_out(station)
       expect(card.exit_station).to eq nil
     end
@@ -56,10 +61,6 @@ describe OysterCard do
     context 'card has been topped up and touched in' do
       before do
         card.touch_in(station)
-      end
-
-      it 'calls the start journey method from journey class' do
-        expect(journey.start).to eq(station)
       end
 
       xit 'touch_out to change in_journey to false' do
