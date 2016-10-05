@@ -46,7 +46,7 @@ describe OysterCard do
 
     it "sets the exit station" do
       card.touch_out(station)
-      expect(card.exit_station).to eq station
+      expect(card.exit_station).to eq nil
     end
 
 
@@ -65,7 +65,7 @@ describe OysterCard do
       it 'sets the entry station to nil' do
         expect{card.touch_out(station)}.to change{card.entry_station}.from(station).to(nil)
       end
-    
+
       it 'updates journey history with an hash of entry and exit stations' do
         card.touch_out(station)
         expect(card.journey_history[0]).to eq({station => station})
